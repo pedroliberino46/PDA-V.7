@@ -6,64 +6,762 @@
 <title>Controle de Coletores</title>
 <style>
 *{box-sizing:border-box}
-:root{--laranja:#ff5a1f;--laranja-escuro:#ee4d18;--laranja-claro:#fff1eb;--fundo:#f6f7f9;--card:#fff;--texto:#172033;--muted:#6b7280;--borda:#e5e7eb;--verde:#159957;--vermelho:#dc2626;--sombra:0 8px 24px rgba(23,32,51,.07)}
+:root{
+  --laranja:#ff5a1f;
+  --laranja-escuro:#ee4d18;
+  --laranja-claro:#fff1eb;
+  --fundo:#f6f7f9;
+  --card:#ffffff;
+  --texto:#172033;
+  --muted:#6b7280;
+  --borda:#e5e7eb;
+  --verde:#159957;
+  --vermelho:#dc2626;
+  --sombra:0 8px 24px rgba(23,32,51,.07);
+}
 body{margin:0;background:var(--fundo);color:var(--texto);font:14px Arial,sans-serif}
-header{height:78px;background:linear-gradient(135deg,var(--laranja),#ff6a00);color:#fff;padding:0 28px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 4px 18px rgba(255,90,31,.22)}
-.marca{display:flex;align-items:center;gap:13px}.logo-shopee{width:48px;height:48px;border-radius:13px;background:#fff;display:grid;place-items:center;box-shadow:0 4px 10px rgba(0,0,0,.12)}.logo-shopee svg{width:34px;height:34px}.marca-texto strong{display:block;font-size:21px;letter-spacing:-.4px}.marca-texto span{display:block;font-size:12px;opacity:.9;margin-top:2px}.topo-direita{display:flex;align-items:center;gap:18px;font-size:13px}.relogio{display:flex;align-items:center;gap:7px}.sistema{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);padding:8px 12px;border-radius:20px}.sistema-dot{width:8px;height:8px;border-radius:50%;background:#fff}
-.abas{position:fixed;left:0;top:78px;bottom:0;width:220px;background:linear-gradient(180deg,#ff5a1f 0%,#f45117 65%,#e94412 100%);padding:24px 14px;display:flex;flex-direction:column;gap:8px;z-index:10}.aba{width:100%;text-align:left;border:0;background:transparent;color:#fff;padding:14px 15px;border-radius:10px;font-weight:bold;font-size:14px;cursor:pointer;transition:.18s;display:flex;align-items:center;gap:10px}.aba:hover{background:rgba(255,255,255,.12)}.aba.ativo{background:#fff;color:var(--laranja-escuro);box-shadow:0 6px 16px rgba(0,0,0,.12)}.aba::before{font-size:17px}#abaMov::before{content:"▣"}#abaCol::before{content:"♟"}#abaAtivos::before{content:"◆"}#abaRelatorio::before{content:"▥"}.abas:after{content:"Juntos fazemos mais!";color:#fff;font-weight:bold;font-style:italic;opacity:.92;margin-top:auto;padding:20px 14px;font-size:18px;line-height:1.2}
-.alerta-pendencias{margin:18px 28px 0 248px;padding:14px 18px;border-radius:12px;background:#fff7ed;color:#9a3412;border:1px solid #fed7aa;box-shadow:var(--sombra)}.alerta-pendencias strong{display:block;margin-bottom:6px}main{max-width:none;margin:0 0 0 220px;padding:22px 28px 34px}.resumo{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}.card,.painel{background:var(--card);border:1px solid var(--borda);border-radius:14px;padding:18px;box-shadow:var(--sombra)}.resumo .card{position:relative;overflow:hidden}.resumo .card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--laranja)}.resumo .card .muted{font-weight:bold;color:#596274}.numero{font-size:30px;font-weight:800;margin-top:8px;color:#14213d}h2{font-size:20px;margin:0 0 7px}h3{font-size:15px;margin:22px 0 12px;color:var(--laranja-escuro)}.muted{color:var(--muted)}.linha{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.campo{margin-bottom:14px}label{display:block;font-weight:bold;margin-bottom:7px;color:#374151}input,textarea,select{width:100%;padding:12px 13px;border:1px solid #d6dae1;border-radius:9px;font:inherit;background:#fff;color:var(--texto);outline:none;transition:.15s}input:focus,textarea:focus,select:focus{border-color:var(--laranja);box-shadow:0 0 0 3px rgba(255,90,31,.12)}textarea{min-height:90px;resize:vertical}button{padding:12px 15px;border:0;border-radius:9px;font-weight:bold;cursor:pointer;transition:.15s}button:hover{transform:translateY(-1px)}.primario{background:var(--laranja);color:#fff;box-shadow:0 5px 12px rgba(255,90,31,.2)}.primario:hover{background:var(--laranja-escuro)}.secundario{background:#fff1eb;color:var(--laranja-escuro);border:1px solid #ffd7c7}.perigo{background:#fff0ef;color:#b42318}.tipo,.acoes{display:flex;gap:10px;margin-bottom:16px}.tipo button,.acoes button{flex:1}.tipo .ativo{background:var(--laranja);color:#fff}.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.check{display:flex;align-items:flex-start;gap:10px;border:1px solid var(--borda);padding:14px;border-radius:10px;background:#fff}.check input{width:18px;margin-top:2px;accent-color:var(--laranja)}.check label{font-weight:normal;margin:0}.check strong,.check small{display:block}.check small{color:var(--muted);margin-top:5px}.mensagem{display:none;padding:12px;border-radius:9px;margin:12px 0}.sucesso{display:block;background:#e9f8f0;color:#166534}.erro{display:block;background:#fff0ef;color:#b42318}.filtros{display:grid;grid-template-columns:1fr 210px;gap:10px}.registro{border:1px solid var(--borda);border-radius:10px;padding:14px;margin-top:10px;overflow-wrap:anywhere;background:#fff}.tag{display:inline-block;background:#e9f8f0;color:#166534;padding:5px 8px;border-radius:18px;font-size:12px;margin:2px}.aberto{background:#fff1d6;color:#8a5a00}.detalhes{line-height:1.8;margin-top:12px}.vazio{text-align:center;color:var(--muted);padding:25px}.tabela-relatorio{width:100%;border-collapse:collapse;margin-top:12px}.tabela-relatorio th,.tabela-relatorio td{padding:11px;border-bottom:1px solid var(--borda);text-align:left}.tabela-relatorio th{background:#fff7f3;color:#9a3412}.painel{margin-bottom:18px}#paginaCol .card{box-shadow:none;margin-top:14px}#paginaAtivos .registro{border-left:4px solid var(--laranja)}#paginaAtivos .registro.ativo-card{padding:16px;margin:12px 0;border-left:4px solid var(--laranja)}.ativo-topo{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.ativo-codigo{font-size:18px;font-weight:800;color:#172033}.ativo-status{font-size:12px;background:#fff1eb;color:#c2410c;padding:5px 9px;border-radius:16px}.ativo-grid{display:grid;grid-template-columns:260px 1fr;gap:12px;align-items:end}.ativo-observacao textarea{min-height:72px}.ativo-salvo{margin-top:9px;color:#166534;font-size:12px}
-@media(max-width:900px){.abas{position:static;width:auto;height:auto;flex-direction:row;overflow:auto;padding:8px;background:#fff;border-bottom:1px solid var(--borda)}.aba{width:auto;min-width:max-content;color:#374151;background:#f3f4f6}.aba.ativo{background:var(--laranja);color:#fff}.abas:after{display:none}main{margin:0;padding:16px}.alerta-pendencias{margin:12px 16px 0}}@media(max-width:650px){header{height:auto;padding:14px 16px}.topo-direita{display:none}.resumo{grid-template-columns:1fr}.linha,.checks,.filtros{grid-template-columns:1fr}.card,.painel{padding:14px}.numero{font-size:25px}.tipo,.acoes{flex-wrap:wrap}.ativo-grid{grid-template-columns:1fr}}
-</style></head><body>
-<header><div class="marca"><div class="logo-shopee" aria-label="Shopee"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M18 24h28l-2 28H20l-2-28Z" fill="#ff5a1f"/><path d="M25 25c0-7 3.5-11 7-11s7 4 7 11" fill="none" stroke="#ff5a1f" stroke-width="4" stroke-linecap="round"/><path d="M26 35c3 3 9 3 12 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div><div class="marca-texto"><strong>Shopee • Controle de Coletores</strong><span>Entrega e devolução de ativos</span></div></div><div class="topo-direita"><div class="relogio">◷ <span id="relogioTopo">--/--/---- --:--</span></div><div class="sistema"><span class="sistema-dot"></span> Sistema</div></div></header>
-<nav class="abas"><button type="button" id="abaMov" class="aba ativo" onclick="mudarAba('mov')">Entrega / Devolução</button><button type="button" id="abaCol" class="aba" onclick="mudarAba('col')">Colaboradores</button><button type="button" id="abaAtivos" class="aba" onclick="mudarAba('ativos')">Ativos</button><button type="button" id="abaRelatorio" class="aba" onclick="mudarAba('relatorio')">Relatório</button></nav>
-<div id="alertaPendencias" class="alerta-pendencias" style="display:none"></div><main>
-<section id="paginaMov"><section class="resumo"><div class="card"><div class="muted">Movimentações</div><div class="numero" id="total">0</div></div><div class="card"><div class="muted">Coletores em uso</div><div class="numero" id="emUso">0</div></div><div class="card"><div class="muted">Devoluções</div><div class="numero" id="devolvidos">0</div></div></section>
-<section class="painel"><h2 id="titulo">Nova entrega</h2><div class="tipo"><button type="button" id="btnEntrega" class="ativo" onclick="mudarTipo('Entrega')">Entrega</button><button type="button" id="btnDevolucao" class="secundario" onclick="mudarTipo('Devolução')">Devolução</button></div>
-<form id="formulario"><h3>1. Identificação</h3><div class="linha"><div class="campo"><label for="patrimonio">Código do ativo *</label><input id="patrimonio" list="listaAtivosInput" required inputmode="numeric" maxlength="2" pattern="[0-9]{1,2}" placeholder="Digite os dígitos, ex.: 01"><datalist id="listaAtivosInput"></datalist></div><div class="campo"><label for="colaborador">Nome do colaborador *</label><input id="colaborador" list="listaColaboradoresInput" required maxlength="120" placeholder="Digite ou selecione o colaborador"><datalist id="listaColaboradoresInput"></datalist></div><div class="campo"><label for="responsavel">Responsável pela movimentação *</label><select id="responsavel" required></select></div><div class="campo"><label>Turno</label><input value="T5" readonly></div><div class="campo"><label for="setor">Setor</label><input id="setor" maxlength="100" placeholder="Ex.: Logística"></div><div class="campo"><label for="data">Data *</label><input id="data" type="date" required></div><div class="campo"><label for="hora">Horário *</label><input id="hora" type="time" required></div></div>
-<h3>2. Checklist do equipamento</h3><p class="muted">Marque os itens conferidos e em boas condições.</p><div class="checks"><div class="check"><input id="tela" type="checkbox"><label for="tela"><strong>Tela e estrutura</strong><small>Sem danos aparentes.</small></label></div><div class="check"><input id="leitor" type="checkbox"><label for="leitor"><strong>Leitor de código de barras</strong><small>Leitura funcionando corretamente.</small></label></div></div><div class="campo" style="margin-top:16px"><label for="observacoes">Observações ou avarias</label><textarea id="observacoes" maxlength="2000" placeholder="Descreva danos ou pendências..."></textarea></div><div id="mensagem" class="mensagem" role="status" aria-live="polite"></div><div class="acoes"><button type="submit" class="primario" id="salvar">Registrar entrega</button><button type="reset" class="secundario" onclick="limparMensagem()">Limpar</button></div></form></section>
-<section class="painel"><h2>Histórico de movimentações</h2><div class="filtros"><input id="busca" placeholder="Buscar patrimônio ou colaborador..." oninput="renderizar()"><select id="filtro" onchange="renderizar()"><option value="Todos">Todas as movimentações</option><option value="Entrega">Entregas</option><option value="Devolução">Devoluções</option></select></div><div id="historico"></div><div class="acoes" style="margin-top:16px"><button class="secundario" type="button" onclick="backup()">Salvar cópia de segurança</button><button class="perigo" type="button" onclick="apagar()">Apagar histórico</button></div><p class="muted">Os registros ficam salvos neste navegador. Faça cópias de segurança regularmente.</p></section></section>
-<section id="paginaAtivos" class="painel" style="display:none"><h2>Controle dos ativos</h2><p class="muted">Registre uma observação para cada PDA. Selecione o tipo de ocorrência no filtro e escreva os detalhes abaixo.</p><div class="filtros" style="margin-bottom:14px"><input id="buscaAtivoObservacao" placeholder="Filtrar PDA ou observação..." oninput="renderizarAtivosObservacoes()"><select id="filtroOcorrenciaAtivo" onchange="renderizarAtivosObservacoes()"><option value="Todos">Todos os tipos</option><option value="TELA/VISOR QUEBRADO">TELA/VISOR QUEBRADO</option><option value="LEITOR CODIGO DE BARRAS">LEITOR CODIGO DE BARRAS</option></select></div><div id="listaAtivos"></div></section>
-<section id="paginaRelatorio" class="painel" style="display:none"><h2>Relatório mensal de não devoluções</h2><p class="muted">Após 03:00, cada entrega que continuar aberta conta como uma ocorrência do colaborador. O ranking é mensal.</p><div class="acoes"><button type="button" class="secundario" onclick="atualizarRelatorio()">Atualizar relatório</button></div><div id="resumoRelatorio"></div><div id="relatorioMensal"></div></section>
-<section id="paginaCol" class="painel" style="display:none"><h2>Cadastro de colaboradores</h2><div class="card"><h3>Colaboradores de confiança</h3><p class="muted">Cadastre os colaboradores autorizados a realizar movimentações. Eles serão usados no campo de responsável da primeira aba.</p><div class="campo"><label for="novoConfianca">Nome Colaborador de Confiança</label><input id="novoConfianca" maxlength="120" placeholder="Nome completo"></div><div class="acoes"><button type="button" class="primario" onclick="adicionarConfianca()">Adicionar colaborador de confiança</button></div><div id="listaConfianca"></div></div><div class="card"><h3>Banco geral de colaboradores</h3><div class="campo"><label for="novoColaborador">Nome Colaborador</label><input id="novoColaborador" maxlength="120" placeholder="Nome completo"></div><div class="acoes"><button type="button" class="primario" onclick="adicionarColaborador()">Adicionar colaborador</button></div><h3>Inclusão em massa</h3><p class="muted">Cole vários nomes, um por linha, ou carregue um arquivo .txt ou .csv.</p><div class="campo"><textarea id="colaboradoresMassa" placeholder="Exemplo:\nJoão da Silva\nMaria Oliveira\nCarlos Santos"></textarea></div><div class="acoes"><button type="button" class="primario" onclick="adicionarEmMassa()">Adicionar lista</button><label class="secundario" style="display:flex;align-items:center;justify-content:center;padding:12px 15px;border-radius:7px;font-weight:bold;cursor:pointer">Carregar .TXT/.CSV<input id="arquivoColaboradores" type="file" accept=".txt,.csv" hidden onchange="importarArquivo(event)"></label></div><div id="listaColaboradores"></div></div></section>
+header{
+  height:78px;background:linear-gradient(135deg,var(--laranja),#ff6a00);
+  color:#fff;padding:0 28px;display:flex;align-items:center;
+  justify-content:space-between;box-shadow:0 4px 18px rgba(255,90,31,.22)
+}
+.marca{display:flex;align-items:center;gap:13px}
+.logo-shopee{
+  width:48px;height:48px;border-radius:13px;background:#fff;
+  display:grid;place-items:center;box-shadow:0 4px 10px rgba(0,0,0,.12)
+}
+.logo-shopee svg{width:34px;height:34px}
+.marca-texto strong{display:block;font-size:21px;letter-spacing:-.4px}
+.marca-texto span{display:block;font-size:12px;opacity:.9;margin-top:2px}
+.topo-direita{display:flex;align-items:center;gap:18px;font-size:13px}
+.relogio{display:flex;align-items:center;gap:7px}
+.sistema{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);padding:8px 12px;border-radius:20px}
+.sistema-dot{width:8px;height:8px;border-radius:50%;background:#fff}
+
+.abas{
+  position:fixed;left:0;top:78px;bottom:0;width:220px;
+  background:linear-gradient(180deg,#ff5a1f 0%,#f45117 65%,#e94412 100%);
+  padding:24px 14px;display:flex;flex-direction:column;gap:8px;z-index:10
+}
+.aba{
+  width:100%;text-align:left;border:0;background:transparent;color:#fff;
+  padding:14px 15px;border-radius:10px;font-weight:bold;font-size:14px;
+  cursor:pointer;transition:.18s;display:flex;align-items:center;gap:10px
+}
+.aba:hover{background:rgba(255,255,255,.12)}
+.aba.ativo{background:#fff;color:var(--laranja-escuro);box-shadow:0 6px 16px rgba(0,0,0,.12)}
+.aba::before{font-size:17px}
+#abaMov::before{content:"▣"}
+#abaCol::before{content:"♟"}
+#abaAtivos::before{content:"◆"}
+#abaRelatorio::before{content:"▥"}
+
+.abas:after{
+  content:"Juntos fazemos mais!";
+  color:#fff;font-weight:bold;font-style:italic;opacity:.92;
+  margin-top:auto;padding:20px 14px;font-size:18px;line-height:1.2
+}
+
+.alerta-pendencias{
+  margin:18px 28px 0 248px;padding:14px 18px;border-radius:12px;
+  background:#fff7ed;color:#9a3412;border:1px solid #fed7aa;
+  box-shadow:var(--sombra)
+}
+.alerta-pendencias strong{display:block;margin-bottom:6px}
+
+main{max-width:none;margin:0 0 0 220px;padding:22px 28px 34px}
+.resumo{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.card,.painel{
+  background:var(--card);border:1px solid var(--borda);border-radius:14px;
+  padding:18px;box-shadow:var(--sombra)
+}
+.resumo .card{position:relative;overflow:hidden}
+.resumo .card:before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--laranja)
+}
+.resumo .card .muted{font-weight:bold;color:#596274}
+.numero{font-size:30px;font-weight:800;margin-top:8px;color:#14213d}
+h2{font-size:20px;margin:0 0 7px}
+h3{font-size:15px;margin:22px 0 12px;color:var(--laranja-escuro)}
+.muted{color:var(--muted)}
+.linha{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.campo{margin-bottom:14px}
+label{display:block;font-weight:bold;margin-bottom:7px;color:#374151}
+input,textarea,select{
+  width:100%;padding:12px 13px;border:1px solid #d6dae1;border-radius:9px;
+  font:inherit;background:#fff;color:var(--texto);outline:none;transition:.15s
+}
+input:focus,textarea:focus,select:focus{
+  border-color:var(--laranja);box-shadow:0 0 0 3px rgba(255,90,31,.12)
+}
+textarea{min-height:90px;resize:vertical}
+button{padding:12px 15px;border:0;border-radius:9px;font-weight:bold;cursor:pointer;transition:.15s}
+button:hover{transform:translateY(-1px)}
+.primario{background:var(--laranja);color:#fff;box-shadow:0 5px 12px rgba(255,90,31,.2)}
+.primario:hover{background:var(--laranja-escuro)}
+.secundario{background:#fff1eb;color:var(--laranja-escuro);border:1px solid #ffd7c7}
+.perigo{background:#fff0ef;color:#b42318}
+.tipo,.acoes{display:flex;gap:10px;margin-bottom:16px}
+.tipo button,.acoes button{flex:1}
+.tipo .ativo{background:var(--laranja);color:#fff}
+.checks{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.check{
+  display:flex;align-items:flex-start;gap:10px;border:1px solid var(--borda);
+  padding:14px;border-radius:10px;background:#fff
+}
+.check input{width:18px;margin-top:2px;accent-color:var(--laranja)}
+.check label{font-weight:normal;margin:0}
+.check strong,.check small{display:block}
+.check small{color:var(--muted);margin-top:5px}
+.mensagem{display:none;padding:12px;border-radius:9px;margin:12px 0}
+.sucesso{display:block;background:#e9f8f0;color:#166534}
+.erro{display:block;background:#fff0ef;color:#b42318}
+.filtros{display:grid;grid-template-columns:1fr 210px;gap:10px}
+.registro{border:1px solid var(--borda);border-radius:10px;padding:14px;margin-top:10px;overflow-wrap:anywhere;background:#fff}
+.tag{display:inline-block;background:#e9f8f0;color:#166534;padding:5px 8px;border-radius:18px;font-size:12px;margin:2px}
+.aberto{background:#fff1d6;color:#8a5a00}
+.detalhes{line-height:1.8;margin-top:12px}
+.vazio{text-align:center;color:var(--muted);padding:25px}
+.tabela-relatorio{width:100%;border-collapse:collapse;margin-top:12px}
+.tabela-relatorio th,.tabela-relatorio td{padding:11px;border-bottom:1px solid var(--borda);text-align:left}
+.tabela-relatorio th{background:#fff7f3;color:#9a3412}
+.painel{margin-bottom:18px}
+#paginaCol .card{box-shadow:none;margin-top:14px}
+#paginaAtivos .registro{border-left:4px solid var(--laranja)}
+#paginaAtivos .registro.ativo-card{padding:16px;margin:12px 0;border-left:4px solid var(--laranja)}
+.ativo-topo{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.ativo-codigo{font-size:18px;font-weight:800;color:#172033}
+.ativo-status{font-size:12px;background:#fff1eb;color:#c2410c;padding:5px 9px;border-radius:16px}
+.ativo-grid{display:grid;grid-template-columns:260px 1fr;gap:12px;align-items:end}
+.ativo-observacao textarea{min-height:72px}
+.ativo-salvo{margin-top:9px;color:#166534;font-size:12px}
+@media(max-width:650px){.ativo-grid{grid-template-columns:1fr}}
+
+
+@media(max-width:900px){
+  .abas{position:static;width:auto;height:auto;flex-direction:row;overflow:auto;padding:8px;background:#fff;border-bottom:1px solid var(--borda)}
+  .aba{width:auto;min-width:max-content;color:#374151;background:#f3f4f6}
+  .aba.ativo{background:var(--laranja);color:#fff}
+  .abas:after{display:none}
+  main{margin:0;padding:16px}
+  .alerta-pendencias{margin:12px 16px 0}
+}
+@media(max-width:650px){
+  header{height:auto;padding:14px 16px}
+  .topo-direita{display:none}
+  .resumo{grid-template-columns:1fr}
+  .linha,.checks,.filtros{grid-template-columns:1fr}
+  .card,.painel{padding:14px}
+  .numero{font-size:25px}
+  .tipo,.acoes{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="marca">
+    <div class="logo-shopee" aria-label="Shopee">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M18 24h28l-2 28H20l-2-28Z" fill="#ff5a1f"/>
+        <path d="M25 25c0-7 3.5-11 7-11s7 4 7 11" fill="none" stroke="#ff5a1f" stroke-width="4" stroke-linecap="round"/>
+        <path d="M26 35c3 3 9 3 12 0" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="marca-texto">
+      <strong>Shopee • Controle de Coletores</strong>
+      <span>Entrega e devolução de ativos</span>
+    </div>
+  </div>
+  <div class="topo-direita">
+    <div class="relogio">◷ <span id="relogioTopo">--/--/---- --:--</span></div>
+    <div class="sistema"><span class="sistema-dot"></span> Sistema</div>
+  </div>
+</header>
+
+<nav class="abas">
+  <button type="button" id="abaMov" class="aba ativo" onclick="mudarAba('mov')">Entrega / Devolução</button>
+  <button type="button" id="abaCol" class="aba" onclick="mudarAba('col')">Colaboradores</button>
+  <button type="button" id="abaAtivos" class="aba" onclick="mudarAba('ativos')">Ativos</button>
+  <button type="button" id="abaRelatorio" class="aba" onclick="mudarAba('relatorio')">Relatório</button>
+</nav>
+
+<div id="alertaPendencias" class="alerta-pendencias" style="display:none"></div>
+<main>
+<section id="paginaMov">
+<section class="resumo">
+<div class="card"><div class="muted">Movimentações</div><div class="numero" id="total">0</div></div>
+<div class="card"><div class="muted">Coletores em uso</div><div class="numero" id="emUso">0</div></div>
+<div class="card"><div class="muted">Devoluções</div><div class="numero" id="devolvidos">0</div></div>
+</section>
+
+<section class="painel">
+<h2 id="titulo">Nova entrega</h2>
+<div class="tipo">
+<button type="button" id="btnEntrega" class="ativo" onclick="mudarTipo('Entrega')">Entrega</button>
+<button type="button" id="btnDevolucao" class="secundario" onclick="mudarTipo('Devolução')">Devolução</button>
+</div>
+
+<form id="formulario">
+<h3>1. Identificação</h3>
+<div class="linha">
+<div class="campo">
+<label for="patrimonio">Código do ativo *</label>
+<input id="patrimonio" list="listaAtivosInput" required inputmode="numeric" maxlength="2" pattern="[0-9]{1,2}" placeholder="Digite os dígitos, ex.: 01">
+<datalist id="listaAtivosInput"></datalist>
+</div>
+<div class="campo">
+<label for="colaborador">Nome do colaborador *</label>
+<input id="colaborador" list="listaColaboradoresInput" required maxlength="120" placeholder="Digite ou selecione o colaborador">
+<datalist id="listaColaboradoresInput"></datalist>
+</div>
+<div class="campo">
+<label for="responsavel">Responsável pela movimentação *</label>
+<select id="responsavel" required></select>
+</div>
+<div class="campo"><label>Turno</label><input value="T5" readonly></div>
+<div class="campo"><label for="setor">Setor</label><input id="setor" maxlength="100" placeholder="Ex.: Logística"></div>
+<div class="campo"><label for="data">Data *</label><input id="data" type="date" required></div>
+<div class="campo"><label for="hora">Horário *</label><input id="hora" type="time" required></div>
+</div>
+
+<h3>2. Checklist do equipamento</h3>
+<p class="muted">Marque os itens conferidos e em boas condições.</p>
+<div class="checks">
+<div class="check"><input id="tela" type="checkbox"><label for="tela"><strong>Tela e estrutura</strong><small>Sem danos aparentes.</small></label></div>
+<div class="check"><input id="leitor" type="checkbox"><label for="leitor"><strong>Leitor de código de barras</strong><small>Leitura funcionando corretamente.</small></label></div>
+</div>
+<div class="campo" style="margin-top:16px">
+<label for="observacoes">Observações ou avarias</label>
+<textarea id="observacoes" maxlength="2000" placeholder="Descreva danos ou pendências..."></textarea>
+</div>
+<div id="mensagem" class="mensagem" role="status" aria-live="polite"></div>
+<div class="acoes">
+<button type="submit" class="primario" id="salvar">Registrar entrega</button>
+<button type="reset" class="secundario" onclick="limparMensagem()">Limpar</button>
+</div>
+</form>
+</section>
+
+<section class="painel">
+<h2>Histórico de movimentações</h2>
+<div class="filtros">
+<input id="busca" placeholder="Buscar patrimônio ou colaborador..." oninput="renderizar()">
+<select id="filtro" onchange="renderizar()">
+<option value="Todos">Todas as movimentações</option>
+<option value="Entrega">Entregas</option>
+<option value="Devolução">Devoluções</option>
+</select>
+</div>
+<div id="historico"></div>
+<div class="acoes" style="margin-top:16px">
+<button class="secundario" type="button" onclick="backup()">Salvar cópia de segurança</button>
+<button class="perigo" type="button" onclick="apagar()">Apagar histórico</button>
+</div>
+<p class="muted">Os registros ficam salvos neste navegador. Faça cópias de segurança regularmente.</p>
+</section>
+</section>
+
+<section id="paginaAtivos" class="painel" style="display:none">
+<h2>Controle dos ativos</h2>
+<p class="muted">Registre uma observação para cada PDA. Selecione o tipo de ocorrência no filtro e escreva os detalhes abaixo.</p>
+<div class="filtros" style="margin-bottom:14px">
+<input id="buscaAtivoObservacao" placeholder="Filtrar PDA ou observação..." oninput="renderizarAtivosObservacoes()">
+<select id="filtroOcorrenciaAtivo" onchange="renderizarAtivosObservacoes()">
+<option value="Todos">Todos os tipos</option>
+<option value="TELA/VISOR QUEBRADO">TELA/VISOR QUEBRADO</option>
+<option value="LEITOR CODIGO DE BARRAS">LEITOR CODIGO DE BARRAS</option>
+</select>
+</div>
+<div id="listaAtivos"></div>
+</section>
+
+<section id="paginaRelatorio" class="painel" style="display:none">
+<h2>Relatório mensal de não devoluções</h2>
+<p class="muted">Após 03:00, cada entrega que continuar aberta conta como uma ocorrência do colaborador. O ranking é mensal.</p>
+<div class="acoes">
+<button type="button" class="secundario" onclick="atualizarRelatorio()">Atualizar relatório</button>
+</div>
+<div id="resumoRelatorio"></div>
+<div id="relatorioMensal"></div>
+</section>
+
+<section id="paginaCol" class="painel" style="display:none">
+<h2>Cadastro de colaboradores</h2>
+
+<div class="card">
+<h3>Colaboradores de confiança</h3>
+<p class="muted">Cadastre os colaboradores autorizados a realizar movimentações. Eles serão usados no campo de responsável da primeira aba.</p>
+<div class="campo">
+<label for="novoConfianca">Nome Colaborador de Confiança</label>
+<input id="novoConfianca" maxlength="120" placeholder="Nome completo">
+</div>
+<div class="acoes">
+<button type="button" class="primario" onclick="adicionarConfianca()">Adicionar colaborador de confiança</button>
+</div>
+<div id="listaConfianca"></div>
+</div>
+
+<div class="card">
+<h3>Banco geral de colaboradores</h3>
+<div class="campo">
+<label for="novoColaborador">Nome Colaborador</label>
+<input id="novoColaborador" maxlength="120" placeholder="Nome completo">
+</div>
+<div class="acoes">
+<button type="button" class="primario" onclick="adicionarColaborador()">Adicionar colaborador</button>
+</div>
+
+<h3>Inclusão em massa</h3>
+<p class="muted">Cole vários nomes, um por linha, ou carregue um arquivo .txt ou .csv.</p>
+<div class="campo">
+<textarea id="colaboradoresMassa" placeholder="Exemplo:
+João da Silva
+Maria Oliveira
+Carlos Santos"></textarea>
+</div>
+<div class="acoes">
+<button type="button" class="primario" onclick="adicionarEmMassa()">Adicionar lista</button>
+<label class="secundario" style="display:flex;align-items:center;justify-content:center;padding:12px 15px;border-radius:7px;font-weight:bold;cursor:pointer">
+Carregar .TXT/.CSV
+<input id="arquivoColaboradores" type="file" accept=".txt,.csv" hidden onchange="importarArquivo(event)">
+</label>
+</div>
+
+<div id="listaColaboradores"></div>
+</section>
 </main>
+
 <script>
-"use strict";const CHAVE="controleColetores_v1",CHAVE_COL="colaboradores_v1",CHAVE_CONF="colaboradores_confianca_v1",CHAVE_OBS_ATIVOS="observacoes_ativos_v1";const ativos=Array.from({length:20},(_,i)=>`PDA-${String(i+1).padStart(2,"0")}`);let registros=[],colaboradores=[],confianca=[],observacoesAtivos={},tipoAtual="Entrega";const $=id=>document.getElementById(id);
-function normalizarAtivo(v){const d=String(v||"").replace(/\D/g,"").slice(0,2);return d?`PDA-${d.padStart(2,"0")}`:""}
-function carregarObservacoesAtivos(){try{const d=localStorage.getItem(CHAVE_OBS_ATIVOS);observacoesAtivos=d?JSON.parse(d):{};if(!observacoesAtivos||typeof observacoesAtivos!=="object")observacoesAtivos={}}catch(e){observacoesAtivos={}}}
-function salvarObservacoesAtivos(){try{localStorage.setItem(CHAVE_OBS_ATIVOS,JSON.stringify(observacoesAtivos));return true}catch(e){alert("Não foi possível salvar as observações dos ativos.");return false}}
-function atualizarAtivos(){const d=$("listaAtivosInput");if(d)d.innerHTML=ativos.map(a=>`<option value="${a.replace("PDA-","")}"></option>`).join("");renderizarAtivosObservacoes()}
-function renderizarAtivosObservacoes(){const busca=String($("buscaAtivoObservacao")?.value||"").trim().toLocaleLowerCase("pt-BR"),filtro=$("filtroOcorrenciaAtivo")?.value||"Todos",lista=ativos.filter(a=>{const o=observacoesAtivos[a]||{},texto=[a,o.tipo,o.texto].join(" ").toLocaleLowerCase("pt-BR");return(!busca||texto.includes(busca))&&(filtro==="Todos"||o.tipo===filtro)});$("listaAtivos").innerHTML=lista.map(a=>{const o=observacoesAtivos[a]||{};return `<div class="registro ativo-card"><div class="ativo-topo"><span class="ativo-codigo">${a}</span><span class="ativo-status">${o.tipo||"Sem ocorrência registrada"}</span></div><div class="ativo-grid"><div class="campo" style="margin:0"><label for="tipoObs_${a}">Filtro / ocorrência</label><select id="tipoObs_${a}"><option value="">Selecione</option><option value="TELA/VISOR QUEBRADO" ${o.tipo==="TELA/VISOR QUEBRADO"?"selected":""}>TELA/VISOR QUEBRADO</option><option value="LEITOR CODIGO DE BARRAS" ${o.tipo==="LEITOR CODIGO DE BARRAS"?"selected":""}>LEITOR CODIGO DE BARRAS</option></select></div><div class="campo ativo-observacao" style="margin:0"><label for="obs_${a}">Observações</label><textarea id="obs_${a}" maxlength="1000" placeholder="Digite a observação deste ativo...">${esc(o.texto||"")}</textarea></div></div><div class="acoes" style="margin-top:12px"><button type="button" class="primario" onclick="salvarObservacaoAtivo('${a}')">Salvar observação</button></div>${o.atualizadoEm?`<div class="ativo-salvo">Última atualização: ${new Date(o.atualizadoEm).toLocaleString("pt-BR")}</div>`:""}</div>`}).join("")||'<div class="vazio">Nenhum ativo encontrado para o filtro informado.</div>'}
-function salvarObservacaoAtivo(ativo){const tipo=$("tipoObs_"+ativo).value,texto=$("obs_"+ativo).value.trim();if(!tipo&&!texto)delete observacoesAtivos[ativo];else{if(!tipo){alert("Selecione uma ocorrência antes de salvar.");return}observacoesAtivos[ativo]={tipo,texto,atualizadoEm:Date.now()}}if(salvarObservacoesAtivos())renderizarAtivosObservacoes()}
-function configurarBuscaAtivo(){$("patrimonio").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,"").slice(0,2));$("patrimonio").addEventListener("blur",e=>{const a=normalizarAtivo(e.target.value);if(a)e.target.value=a})}
-function salvarColaboradores(){try{localStorage.setItem(CHAVE_COL,JSON.stringify(colaboradores));return true}catch(e){alert("Não foi possível salvar os colaboradores.");return false}}
-function carregarColaboradores(){try{const d=localStorage.getItem(CHAVE_COL);colaboradores=d?JSON.parse(d):[];if(!Array.isArray(colaboradores))colaboradores=[]}catch(e){colaboradores=[]}atualizarResponsaveis();atualizarDatalist();renderColaboradores()}
-function atualizarResponsaveis(){const s=$("responsavel"),atual=s.value,lista=confianca.length?confianca:colaboradores;s.innerHTML='<option value="">Selecione o responsável</option>'+lista.map(n=>`<option>${esc(n)}</option>`).join("");if(lista.includes(atual))s.value=atual;atualizarDatalist()}
-function atualizarDatalist(){const d=$("listaColaboradoresInput");if(!d)return;d.innerHTML=colaboradores.map(n=>`<option value="${esc(n)}"></option>`).join("")}
-function salvarConfianca(){try{localStorage.setItem(CHAVE_CONF,JSON.stringify(confianca));return true}catch(e){alert("Não foi possível salvar os colaboradores de confiança.");return false}}
-function carregarConfianca(){try{const d=localStorage.getItem(CHAVE_CONF);confianca=d?JSON.parse(d):[];if(!Array.isArray(confianca))confianca=[]}catch(e){confianca=[]}}
-function adicionarConfianca(){const nome=$("novoConfianca").value.trim();if(!nome){alert("Informe o nome do colaborador de confiança.");return}if(!colaboradores.some(n=>chavePatrimonio(n)===chavePatrimonio(nome))){colaboradores.push(nome);colaboradores.sort((a,b)=>a.localeCompare(b,"pt-BR"));salvarColaboradores()}if(confianca.some(n=>chavePatrimonio(n)===chavePatrimonio(nome))){alert("Este colaborador já está na lista de confiança.");return}confianca.push(nome);confianca.sort((a,b)=>a.localeCompare(b,"pt-BR"));salvarConfianca();atualizarResponsaveis();atualizarDatalist();renderColaboradores();$("novoConfianca").value=""}
-function excluirConfianca(nome){if(!confirm("Remover "+nome+" da lista de confiança?"))return;confianca=confianca.filter(n=>n!==nome);salvarConfianca();atualizarResponsaveis();renderColaboradores()}
-function adicionarColaborador(){const nome=$("novoColaborador").value.trim();if(!nome){alert("Informe o nome do colaborador.");return}if(colaboradores.some(n=>chavePatrimonio(n)===chavePatrimonio(nome))){alert("Este colaborador já está cadastrado.");return}colaboradores.push(nome);colaboradores.sort((a,b)=>a.localeCompare(b,"pt-BR"));if(salvarColaboradores()){$("novoColaborador").value="";atualizarResponsaveis();renderColaboradores()}}
-function adicionarEmMassa(){const texto=$("colaboradoresMassa").value.trim();if(!texto){alert("Cole ou informe os nomes dos colaboradores.");return}const nomes=texto.split(/\r?\n/).map(n=>n.trim()).filter(Boolean).map(n=>n.replace(/^["']|["']$/g,"").trim());let adicionados=0;nomes.forEach(nome=>{if(nome&&!colaboradores.some(n=>chavePatrimonio(n)===chavePatrimonio(nome))){colaboradores.push(nome);adicionados++}});colaboradores.sort((a,b)=>a.localeCompare(b,"pt-BR"));if(adicionados){salvarColaboradores();atualizarResponsaveis();renderColaboradores()}$("colaboradoresMassa").value="";alert(adicionados+" colaborador(es) adicionado(s)."+(nomes.length-adicionados>0?" "+(nomes.length-adicionados)+" já existia(m) ou estava(m) duplicado(s).":""))}
-function importarArquivo(event){const arquivo=event.target.files[0];if(!arquivo)return;const leitor=new FileReader();leitor.onload=()=>{$("colaboradoresMassa").value=String(leitor.result||"").replace(/\r/g,"").split("\n").map(l=>l.trim()).filter(Boolean).join("\n");adicionarEmMassa()};leitor.readAsText(arquivo,"UTF-8");event.target.value=""}
-function excluirColaborador(nome){if(!confirm("Excluir "+nome+" da lista de colaboradores?"))return;colaboradores=colaboradores.filter(n=>n!==nome);confianca=confianca.filter(n=>n!==nome);salvarColaboradores();salvarConfianca();atualizarResponsaveis();atualizarDatalist();renderColaboradores()}
-function renderColaboradores(){$("listaConfianca").innerHTML=confianca.length?confianca.map(n=>`<div class="registro"><strong>${esc(n)}</strong><span class="tag">Confiança</span><button type="button" class="perigo" style="float:right;padding:6px 9px" onclick='excluirConfianca(${JSON.stringify(n)})'>Remover confiança</button></div>`).join(""):'<div class="vazio">Nenhum colaborador de confiança cadastrado.</div>';$('listaColaboradores').innerHTML=colaboradores.length?colaboradores.map(n=>`<div class="registro"><strong>${esc(n)}</strong>${confianca.some(c=>chavePatrimonio(c)===chavePatrimonio(n))?'<span class="tag">Confiança</span>':''}<button type="button" class="perigo" style="float:right;padding:6px 9px" onclick='excluirColaborador(${JSON.stringify(n)})'>Excluir</button></div>`).join(""):'<div class="vazio">Nenhum colaborador cadastrado.</div>'}
-function mudarAba(aba){const mov=aba==="mov",col=aba==="col",at=aba==="ativos",rel=aba==="relatorio";$("paginaMov").style.display=mov?"block":"none";$("paginaCol").style.display=col?"block":"none";$("paginaAtivos").style.display=at?"block":"none";$("paginaRelatorio").style.display=rel?"block":"none";$("abaMov").className="aba "+(mov?"ativo":"");$("abaCol").className="aba "+(col?"ativo":"");$("abaAtivos").className="aba "+(at?"ativo":"");$("abaRelatorio").className="aba "+(rel?"ativo":"");if(rel)atualizarRelatorio()}
-function agora(){const d=new Date(),p=n=>String(n).padStart(2,"0");return{data:`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`,hora:`${p(d.getHours())}:${p(d.getMinutes())}`}}
-function mensagem(txt,tipo="sucesso"){$("mensagem").textContent=txt;$("mensagem").className="mensagem "+tipo}function limparMensagem(){$("mensagem").textContent="";$('mensagem').className="mensagem"}
-function mudarTipo(tipo){tipoAtual=tipo;$("titulo").textContent=tipo==="Entrega"?"Nova entrega":"Registrar devolução";$("salvar").textContent="Registrar "+tipo.toLowerCase();$("btnEntrega").className=tipo==="Entrega"?"ativo":"secundario";$("btnDevolucao").className=tipo==="Devolução"?"ativo":"secundario";limparMensagem()}
-function carregar(){try{const dados=localStorage.getItem(CHAVE);registros=dados?JSON.parse(dados):[];if(!Array.isArray(registros))throw Error()}catch(e){registros=[];alert("Não foi possível ler os registros salvos.")}renderizar()}
-function persistir(){try{localStorage.setItem(CHAVE,JSON.stringify(registros));return true}catch(e){mensagem("Não foi possível salvar os dados. Faça uma cópia de segurança e verifique o espaço disponível.","erro");return false}}
-function chavePatrimonio(p){return p.trim().toLocaleLowerCase("pt-BR")}function entregaAberta(p){const lista=registros.filter(r=>chavePatrimonio(r.patrimonio)===chavePatrimonio(p)).sort((a,b)=>b.criadoEm-a.criadoEm);return lista.length&&lista[0].tipo==="Entrega"?lista[0]:null}
-$("formulario").addEventListener("submit",e=>{e.preventDefault();limparMensagem();const patrimonio=normalizarAtivo($("patrimonio").value),colaborador=$("colaborador").value.trim(),responsavel=$("responsavel").value.trim();if(!patrimonio||!ativos.includes(patrimonio)||!colaborador||!responsavel||!$("data").value||!$("hora").value){mensagem("Informe um código de ativo válido (PDA-01 a PDA-20) e preencha os campos obrigatórios.","erro");return}const aberta=entregaAberta(patrimonio);if(tipoAtual==="Entrega"&&aberta){mensagem("Este coletor já está em uso por "+aberta.colaborador+". Registre a devolução primeiro.","erro");return}if(tipoAtual==="Devolução"&&!aberta){mensagem("Não existe entrega em aberto para este patrimônio. Confira o número do coletor.","erro");return}if(tipoAtual==="Devolução"&&chavePatrimonio(aberta.colaborador)!==chavePatrimonio(colaborador)){if(!confirm("A entrega está vinculada a "+aberta.colaborador+". Deseja registrar a devolução para "+colaborador+"?"))return}const novo={id:Date.now().toString()+"-"+Math.random().toString(16).slice(2),criadoEm:Date.now(),tipo:tipoAtual,patrimonio,colaborador,responsavel,setor:$("setor").value.trim(),data:$("data").value,hora:$("hora").value,checklist:{tela:$("tela").checked,leitor:$("leitor").checked},observacoes:$("observacoes").value.trim()};registros.push(novo);if(!persistir()){registros.pop();return}renderizar();$("formulario").reset();const t=agora();$("data").value=t.data;$("hora").value=t.hora;mensagem(tipoAtual+" do coletor "+patrimonio+" registrada com sucesso.")});
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}function status(r){return entregaAberta(r.patrimonio)?"Em uso":"Devolvido"}
-function renderizar(){$("total").textContent=registros.length;$("emUso").textContent=registros.filter(r=>r.tipo==="Entrega"&&status(r)==="Em uso").length;$("devolvidos").textContent=registros.filter(r=>r.tipo==="Devolução").length;const q=$("busca").value.trim().toLocaleLowerCase("pt-BR"),filtro=$("filtro").value,lista=[...registros].sort((a,b)=>b.criadoEm-a.criadoEm).filter(r=>(filtro==="Todos"||r.tipo===filtro)&&[r.patrimonio,r.colaborador,r.responsavel,r.setor].some(v=>String(v||"").toLocaleLowerCase("pt-BR").includes(q)));if(!lista.length){$("historico").innerHTML='<div class="vazio">Nenhuma movimentação encontrada.</div>';return}$("historico").innerHTML=lista.map(r=>{const itens=[["Tela e estrutura",r.checklist?.tela],["Leitor",r.checklist?.leitor]];return `<article class="registro"><strong>${esc(r.patrimonio)}</strong><span class="tag">${esc(r.tipo)}</span>${r.tipo==="Entrega"?`<span class="tag ${status(r)==="Em uso"?"aberto":""}">${status(r)}</span>`:""}<div class="detalhes"><strong>Colaborador:</strong> ${esc(r.colaborador)}<br><strong>Responsável:</strong> ${esc(r.responsavel)}<br><strong>Setor:</strong> ${esc(r.setor||"Não informado")}<br><strong>Data:</strong> ${esc(r.data)} às ${esc(r.hora)}<br><strong>Checklist:</strong><br>${itens.map(([n,ok])=>(ok?"✓ ":"○ ")+esc(n)+": "+(ok?"Conferido":"Não conferido")).join("<br>")}${r.observacoes?"<br><strong>Observações:</strong><br>"+esc(r.observacoes).replace(/\n/g,"<br>"):""}</div></article>`}).join("")}
-function dataLocalISO(d=new Date()){const p=n=>String(n).padStart(2,"0");return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`}function apos0300(){return new Date().getHours()>=3}function entregasPendentes(){return registros.filter(r=>r.tipo==="Entrega"&&status(r)==="Em uso")}
-function verificarAlerta(){const pendentes=apos0300()?entregasPendentes():[],box=$("alertaPendencias");if(!pendentes.length){box.style.display="none";box.innerHTML="";return}const nomes=[...new Set(pendentes.map(r=>r.colaborador))];box.style.display="block";box.innerHTML=`<strong>⚠ ALERTA — ativos não devolvidos após 03:00</strong>${nomes.length} colaborador(es) ainda não entregaram o ativo:${nomes.map(n=>`<span class="tag aberto">${esc(n)}</span>`).join(" ")}<br><small>Ativos pendentes: ${pendentes.map(r=>esc(r.patrimonio)).join(", ")}</small>`}
-function chaveMes(data){return String(data||"").slice(0,7)}function atualizarRelatorio(){const hoje=new Date(),mes=dataLocalISO(hoje).slice(0,7),ocorrencias={};registros.forEach(r=>{if(r.tipo!=="Entrega"||chaveMes(r.data)!==mes)return;const devolucao=registros.filter(x=>x.tipo==="Devolução"&&chavePatrimonio(x.patrimonio)===chavePatrimonio(r.patrimonio)&&x.criadoEm>r.criadoEm).sort((a,b)=>a.criadoEm-b.criadoEm)[0],limite=new Date(r.data+"T03:00:00");limite.setDate(limite.getDate()+1);const houveApos0300=devolucao?devolucao.criadoEm>=limite.getTime():Date.now()>=limite.getTime();if(houveApos0300)ocorrencias[r.colaborador]=(ocorrencias[r.colaborador]||0)+1});const ranking=Object.entries(ocorrencias).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],"pt-BR"));$("resumoRelatorio").innerHTML=ranking.length?`<div class="card"><div class="muted">Ofensores no mês</div><div class="numero">${ranking.length}</div></div>`:'<div class="vazio">Nenhuma ocorrência registrada no mês atual.</div>';$('relatorioMensal').innerHTML=ranking.length?`<table class="tabela-relatorio"><thead><tr><th>Posição</th><th>Colaborador</th><th>Ocorrências</th></tr></thead><tbody>${ranking.map((x,i)=>`<tr><td>${i+1}º</td><td><strong>${esc(x[0])}</strong></td><td>${x[1]}</td></tr>`).join("")}</tbody></table>`:""}
-function iniciarMonitoramento(){verificarAlerta();atualizarRelatorio();setInterval(verificarAlerta,60000);setInterval(atualizarRelatorio,60000)}
-function backup(){const dados={aplicativo:"Controle de Coletores",versao:1,exportadoEm:new Date().toISOString(),registros};const blob=new Blob([JSON.stringify(dados,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="backup-controle-coletores.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-function apagar(){if(!registros.length){alert("Não há registros para apagar.");return}if(prompt("Esta ação apagará todos os registros. Digite APAGAR para confirmar:")!=="APAGAR")return;const anterior=registros;registros=[];if(!persistir()){registros=anterior;renderizar();return}renderizar();mensagem("Histórico apagado deste navegador.")}
-const t=agora();$("data").value=t.data;$("hora").value=t.hora;carregarConfianca();carregarColaboradores();carregarObservacoesAtivos();atualizarDatalist();atualizarAtivos();configurarBuscaAtivo();carregar();iniciarMonitoramento();
-function atualizarRelogioTopo(){const el=document.getElementById('relogioTopo');if(!el)return;const agora=new Date();el.textContent=agora.toLocaleDateString('pt-BR')+' '+agora.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}atualizarRelogioTopo();setInterval(atualizarRelogioTopo,30000);
-</script></body></html>
+"use strict";
+const CHAVE="controleColetores_v1", CHAVE_COL="colaboradores_v1", CHAVE_CONF="colaboradores_confianca_v1", CHAVE_OBS_ATIVOS="observacoes_ativos_v1";
+const ativos=Array.from({length:20},(_,i)=>`PDA-${String(i+1).padStart(2,"0")}`);
+let registros=[], colaboradores=[], confianca=[], observacoesAtivos={}, tipoAtual="Entrega";
+const $=id=>document.getElementById(id);
+
+
+function normalizarAtivo(v){
+ const d=String(v||"").replace(/\D/g,"").slice(0,2);
+ return d?`PDA-${d.padStart(2,"0")}`:"";
+}
+function carregarObservacoesAtivos(){
+ try{
+  const d=localStorage.getItem(CHAVE_OBS_ATIVOS);
+  observacoesAtivos=d?JSON.parse(d):{};
+  if(!observacoesAtivos||typeof observacoesAtivos!=="object") observacoesAtivos={};
+ }catch(e){observacoesAtivos={};}
+}
+function salvarObservacoesAtivos(){
+ try{
+  localStorage.setItem(CHAVE_OBS_ATIVOS,JSON.stringify(observacoesAtivos));
+  return true;
+ }catch(e){
+  alert("Não foi possível salvar as observações dos ativos.");
+  return false;
+ }
+}
+function atualizarAtivos(){
+ const d=$("listaAtivosInput");
+ if(d)d.innerHTML=ativos.map(a=>`<option value="${a.replace("PDA-","")}"></option>`).join("");
+ renderizarAtivosObservacoes();
+}
+function renderizarAtivosObservacoes(){
+ const busca=String($("buscaAtivoObservacao")?.value||"").trim().toLocaleLowerCase("pt-BR");
+ const filtro=$("filtroOcorrenciaAtivo")?.value||"Todos";
+ const lista=ativos.filter(a=>{
+  const o=observacoesAtivos[a]||{};
+  const texto=[a,o.tipo,o.texto].join(" ").toLocaleLowerCase("pt-BR");
+  const passaBusca=!busca||texto.includes(busca);
+  const passaFiltro=filtro==="Todos"||o.tipo===filtro;
+  return passaBusca&&passaFiltro;
+ });
+ $("listaAtivos").innerHTML=lista.map(a=>{
+  const o=observacoesAtivos[a]||{};
+  return `<div class="registro ativo-card">
+    <div class="ativo-topo">
+      <span class="ativo-codigo">${a}</span>
+      <span class="ativo-status">${o.tipo||"Sem ocorrência registrada"}</span>
+    </div>
+    <div class="ativo-grid">
+      <div class="campo" style="margin:0">
+        <label for="tipoObs_${a}">Filtro / ocorrência</label>
+        <select id="tipoObs_${a}">
+          <option value="">Selecione</option>
+          <option value="TELA/VISOR QUEBRADO" ${o.tipo==="TELA/VISOR QUEBRADO"?"selected":""}>TELA/VISOR QUEBRADO</option>
+          <option value="LEITOR CODIGO DE BARRAS" ${o.tipo==="LEITOR CODIGO DE BARRAS"?"selected":""}>LEITOR CODIGO DE BARRAS</option>
+        </select>
+      </div>
+      <div class="campo ativo-observacao" style="margin:0">
+        <label for="obs_${a}">Observações</label>
+        <textarea id="obs_${a}" maxlength="1000" placeholder="Digite a observação deste ativo...">${esc(o.texto||"")}</textarea>
+      </div>
+    </div>
+    <div class="acoes" style="margin-top:12px">
+      <button type="button" class="primario" onclick="salvarObservacaoAtivo('${a}')">Salvar observação</button>
+    </div>
+    ${o.atualizadoEm?`<div class="ativo-salvo">Última atualização: ${new Date(o.atualizadoEm).toLocaleString("pt-BR")}</div>`:""}
+  </div>`;
+ }).join("") || '<div class="vazio">Nenhum ativo encontrado para o filtro informado.</div>';
+}
+function salvarObservacaoAtivo(ativo){
+ const tipo=$("tipoObs_"+ativo).value;
+ const texto=$("obs_"+ativo).value.trim();
+ if(!tipo&&!texto){
+  delete observacoesAtivos[ativo];
+ }else{
+  if(!tipo){
+   alert("Selecione uma ocorrência antes de salvar.");
+   return;
+  }
+  observacoesAtivos[ativo]={tipo,texto,atualizadoEm:Date.now()};
+ }
+ if(salvarObservacoesAtivos()) renderizarAtivosObservacoes();
+}
+function configurarBuscaAtivo(){
+ const campo=$("patrimonio");
+ if(!campo)return;
+ campo.addEventListener("focus",e=>{const d=String(e.target.value||"").replace(/^PDA-?/i,"").replace(/\D/g,"").slice(0,2);e.target.value=d;e.target.select();});
+ campo.addEventListener("input",e=>{e.target.value=String(e.target.value||"").replace(/\D/g,"").slice(0,2);const n=Number(e.target.value);e.target.setCustomValidity(e.target.value.length===2&&n>20?"Digite um código entre 01 e 20.":"");});
+ campo.addEventListener("blur",e=>{const d=String(e.target.value||"").replace(/\D/g,"").slice(0,2),n=Number(d);if(!d){e.target.value="";return;}if(n<1||n>20){e.target.value="";e.target.setCustomValidity("Digite um código entre 01 e 20.");return;}e.target.setCustomValidity("");e.target.value=String(n).padStart(2,"0");});
+}
+function salvarColaboradores(){
+ try{localStorage.setItem(CHAVE_COL,JSON.stringify(colaboradores));return true}
+ catch(e){alert("Não foi possível salvar os colaboradores.");return false}
+}
+function carregarColaboradores(){
+ try{
+  const d=localStorage.getItem(CHAVE_COL);
+  colaboradores=d?JSON.parse(d):[];
+  if(!Array.isArray(colaboradores)) colaboradores=[];
+ }catch(e){colaboradores=[]}
+ atualizarResponsaveis(); atualizarDatalist(); renderColaboradores();
+}
+function atualizarResponsaveis(){
+ const s=$("responsavel"), atual=s.value;
+ const lista=confianca.length?confianca:colaboradores;
+ s.innerHTML='<option value="">Selecione o responsável</option>'+
+  lista.map(n=>`<option>${esc(n)}</option>`).join("");
+ if(lista.includes(atual)) s.value=atual;
+ atualizarDatalist();
+}
+function atualizarDatalist(){
+ const d=$("listaColaboradoresInput");
+ if(!d)return;
+ d.innerHTML=colaboradores.map(n=>`<option value="${esc(n)}"></option>`).join("");
+}
+function salvarConfianca(){
+ try{localStorage.setItem(CHAVE_CONF,JSON.stringify(confianca));return true}
+ catch(e){alert("Não foi possível salvar os colaboradores de confiança.");return false}
+}
+function carregarConfianca(){
+ try{
+  const d=localStorage.getItem(CHAVE_CONF);
+  confianca=d?JSON.parse(d):[];
+  if(!Array.isArray(confianca)) confianca=[];
+ }catch(e){confianca=[]}
+}
+function adicionarConfianca(){
+ const nome=$("novoConfianca").value.trim();
+ if(!nome){alert("Informe o nome do colaborador de confiança.");return}
+ if(!colaboradores.some(n=>chavePatrimonio(n)===chavePatrimonio(nome))){
+  colaboradores.push(nome);
+  colaboradores.sort((a,b)=>a.localeCompare(b,"pt-BR"));
+  salvarColaboradores();
+ }
+ if(confianca.some(n=>chavePatrimonio(n)===chavePatrimonio(nome))){
+  alert("Este colaborador já está na lista de confiança.");return
+ }
+ confianca.push(nome);
+ confianca.sort((a,b)=>a.localeCompare(b,"pt-BR"));
+ salvarConfianca();
+ atualizarResponsaveis(); atualizarDatalist(); renderColaboradores();
+ $("novoConfianca").value="";
+}
+function excluirConfianca(nome){
+ if(!confirm("Remover "+nome+" da lista de confiança?")) return;
+ confianca=confianca.filter(n=>n!==nome);
+ salvarConfianca(); atualizarResponsaveis(); renderColaboradores();
+}
+function adicionarColaborador(){
+ const nome=$("novoColaborador").value.trim();
+ if(!nome){alert("Informe o nome do colaborador.");return}
+ if(colaboradores.some(n=>chavePatrimonio(n)===chavePatrimonio(nome))){
+  alert("Este colaborador já está cadastrado.");return
+ }
+ colaboradores.push(nome); colaboradores.sort((a,b)=>a.localeCompare(b,"pt-BR"));
+ if(salvarColaboradores()){$("novoColaborador").value="";atualizarResponsaveis();renderColaboradores()}
+}
+function adicionarEmMassa(){
+ const texto=$("colaboradoresMassa").value.trim();
+ if(!texto){alert("Cole ou informe os nomes dos colaboradores.");return}
+ const nomes=texto.split(/\r?\n/)
+  .map(n=>n.trim())
+  .filter(Boolean)
+  .map(n=>n.replace(/^["']|["']$/g,"").trim());
+ let adicionados=0;
+ nomes.forEach(nome=>{
+  if(nome && !colaboradores.some(n=>chavePatrimonio(n)===chavePatrimonio(nome))){
+   colaboradores.push(nome); adicionados++;
+  }
+ });
+ colaboradores.sort((a,b)=>a.localeCompare(b,"pt-BR"));
+ if(adicionados){
+  salvarColaboradores(); atualizarResponsaveis(); renderColaboradores();
+ }
+ $("colaboradoresMassa").value="";
+ alert(adicionados+" colaborador(es) adicionado(s)."+
+       (nomes.length-adicionados>0?" "+(nomes.length-adicionados)+" já existia(m) ou estava(m) duplicado(s).":""));
+}
+function importarArquivo(event){
+ const arquivo=event.target.files[0];
+ if(!arquivo)return;
+ const leitor=new FileReader();
+ leitor.onload=()=>{
+  $("colaboradoresMassa").value=String(leitor.result||"")
+   .replace(/\r/g,"").split("\n").map(l=>l.trim()).filter(Boolean).join("\n");
+  adicionarEmMassa();
+ };
+ leitor.readAsText(arquivo,"UTF-8");
+ event.target.value="";
+}
+
+function excluirColaborador(nome){
+ if(!confirm("Excluir "+nome+" da lista de colaboradores?")) return;
+ colaboradores=colaboradores.filter(n=>n!==nome);
+ confianca=confianca.filter(n=>n!==nome);
+ salvarColaboradores(); salvarConfianca(); atualizarResponsaveis(); atualizarDatalist(); renderColaboradores();
+}
+function renderColaboradores(){
+ $("listaConfianca").innerHTML=confianca.length
+ ? confianca.map(n=>`<div class="registro"><strong>${esc(n)}</strong>
+ <span class="tag">Confiança</span>
+ <button type="button" class="perigo" style="float:right;padding:6px 9px" onclick='excluirConfianca(${JSON.stringify(n)})'>Remover confiança</button></div>`).join("")
+ : '<div class="vazio">Nenhum colaborador de confiança cadastrado.</div>';
+
+ $("listaColaboradores").innerHTML=colaboradores.length
+ ? colaboradores.map(n=>`<div class="registro"><strong>${esc(n)}</strong>
+ ${confianca.some(c=>chavePatrimonio(c)===chavePatrimonio(n))?'<span class="tag">Confiança</span>':''}
+ <button type="button" class="perigo" style="float:right;padding:6px 9px" onclick='excluirColaborador(${JSON.stringify(n)})'>Excluir</button></div>`).join("")
+ : '<div class="vazio">Nenhum colaborador cadastrado.</div>';
+}
+function mudarAba(aba){
+ const mov=aba==="mov", col=aba==="col", at=aba==="ativos", rel=aba==="relatorio";
+ $("paginaMov").style.display=mov?"block":"none";
+ $("paginaCol").style.display=col?"block":"none";
+ $("paginaAtivos").style.display=at?"block":"none";
+ $("paginaRelatorio").style.display=rel?"block":"none";
+ $("abaMov").className="aba "+(mov?"ativo":"");
+ $("abaCol").className="aba "+(col?"ativo":"");
+ $("abaAtivos").className="aba "+(at?"ativo":"");
+ $("abaRelatorio").className="aba "+(rel?"ativo":"");
+ if(rel) atualizarRelatorio();
+}
+function agora(){
+ const d=new Date(),p=n=>String(n).padStart(2,"0");
+ return {data:`${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`,hora:`${p(d.getHours())}:${p(d.getMinutes())}`};
+}
+function mensagem(txt,tipo="sucesso"){
+ $("mensagem").textContent=txt;
+ $("mensagem").className="mensagem "+tipo;
+}
+function limparMensagem(){
+ $("mensagem").textContent="";
+ $("mensagem").className="mensagem";
+}
+function mudarTipo(tipo){
+ tipoAtual=tipo;
+ $("titulo").textContent=tipo==="Entrega"?"Nova entrega":"Registrar devolução";
+ $("salvar").textContent="Registrar "+tipo.toLowerCase();
+ $("btnEntrega").className=tipo==="Entrega"?"ativo":"secundario";
+ $("btnDevolucao").className=tipo==="Devolução"?"ativo":"secundario";
+ limparMensagem();
+}
+function carregar(){
+ try{
+  const dados=localStorage.getItem(CHAVE);
+  registros=dados?JSON.parse(dados):[];
+  if(!Array.isArray(registros))throw Error();
+ }catch(e){
+  registros=[];
+  alert("Não foi possível ler os registros salvos.");
+ }
+ renderizar();
+}
+function persistir(){
+ try{
+  localStorage.setItem(CHAVE,JSON.stringify(registros));
+  return true;
+ }catch(e){
+  mensagem("Não foi possível salvar os dados. Faça uma cópia de segurança e verifique o espaço disponível.","erro");
+  return false;
+ }
+}
+function chavePatrimonio(p){
+ return p.trim().toLocaleLowerCase("pt-BR");
+}
+function entregaAberta(p){
+ const lista=registros.filter(r=>chavePatrimonio(r.patrimonio)===chavePatrimonio(p)).sort((a,b)=>b.criadoEm-a.criadoEm);
+ return lista.length&&lista[0].tipo==="Entrega"?lista[0]:null;
+}
+$("formulario").addEventListener("submit",e=>{
+ e.preventDefault();
+ limparMensagem();
+ const codigoDigitado=String($("patrimonio").value||"").replace(/\D/g,"").slice(0,2);
+ const numeroAtivo=Number(codigoDigitado);
+ const patrimonio=(codigoDigitado && numeroAtivo>=1 && numeroAtivo<=20)?`PDA-${String(numeroAtivo).padStart(2,"0")}`:"";
+ const colaborador=$("colaborador").value.trim();
+ const responsavel=$("responsavel").value.trim();
+ if(!patrimonio||!ativos.includes(patrimonio)||!colaborador||!responsavel||!$("data").value||!$("hora").value){
+  mensagem("Informe um código de ativo válido (PDA-01 a PDA-20) e preencha os campos obrigatórios.","erro");return;
+ }
+ const aberta=entregaAberta(patrimonio);
+ if(tipoAtual==="Entrega"&&aberta){
+  mensagem("Este coletor já está em uso por "+aberta.colaborador+". Registre a devolução primeiro.","erro");return;
+ }
+ if(tipoAtual==="Devolução"&&!aberta){
+  mensagem("Não existe entrega em aberto para este patrimônio. Confira o número do coletor.","erro");return;
+ }
+ if(tipoAtual==="Devolução"&&chavePatrimonio(aberta.colaborador)!==chavePatrimonio(colaborador)){
+  if(!confirm("A entrega está vinculada a "+aberta.colaborador+". Deseja registrar a devolução para "+colaborador+"?"))return;
+ }
+ const novo={
+  id:Date.now().toString()+"-"+Math.random().toString(16).slice(2),
+  criadoEm:Date.now(),tipo:tipoAtual,patrimonio,colaborador,responsavel,
+  setor:$("setor").value.trim(),data:$("data").value,hora:$("hora").value,
+  checklist:{tela:$("tela").checked,leitor:$("leitor").checked},
+  observacoes:$("observacoes").value.trim()
+ };
+ registros.push(novo);
+ if(!persistir()){registros.pop();return;}
+ renderizar();
+ $("formulario").reset();
+ const t=agora();$("data").value=t.data;$("hora").value=t.hora;
+ mensagem(tipoAtual+" do coletor "+patrimonio+" registrada com sucesso.");
+});
+function esc(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function status(r){return entregaAberta(r.patrimonio)?"Em uso":"Devolvido";}
+function renderizar(){
+ $("total").textContent=registros.length;
+ $("emUso").textContent=registros.filter(r=>r.tipo==="Entrega"&&status(r)==="Em uso").length;
+ $("devolvidos").textContent=registros.filter(r=>r.tipo==="Devolução").length;
+ const q=$("busca").value.trim().toLocaleLowerCase("pt-BR");
+ const filtro=$("filtro").value;
+ const lista=[...registros].sort((a,b)=>b.criadoEm-a.criadoEm).filter(r=>(filtro==="Todos"||r.tipo===filtro)&&[r.patrimonio,r.colaborador,r.responsavel,r.setor].some(v=>String(v||"").toLocaleLowerCase("pt-BR").includes(q)));
+ if(!lista.length){$("historico").innerHTML='<div class="vazio">Nenhuma movimentação encontrada.</div>';return;}
+ $("historico").innerHTML=lista.map(r=>{
+  const itens=[["Tela e estrutura",r.checklist?.tela],["Leitor",r.checklist?.leitor]];
+  return `<article class="registro">
+  <strong>${esc(r.patrimonio)}</strong>
+  <span class="tag">${esc(r.tipo)}</span>
+  ${r.tipo==="Entrega"?`<span class="tag ${status(r)==="Em uso"?"aberto":""}">${status(r)}</span>`:""}
+  <div class="detalhes">
+  <strong>Colaborador:</strong> ${esc(r.colaborador)}<br>
+  <strong>Responsável:</strong> ${esc(r.responsavel)}<br>
+  <strong>Setor:</strong> ${esc(r.setor||"Não informado")}<br>
+  <strong>Data:</strong> ${esc(r.data)} às ${esc(r.hora)}<br>
+  <strong>Checklist:</strong><br>
+  ${itens.map(([n,ok])=>(ok?"✓ ":"○ ")+esc(n)+": "+(ok?"Conferido":"Não conferido")).join("<br>")}
+  ${r.observacoes?"<br><strong>Observações:</strong><br>"+esc(r.observacoes).replace(/\n/g,"<br>"):""}
+  </div></article>`;
+ }).join("");
+}
+
+function dataLocalISO(d=new Date()){
+ const p=n=>String(n).padStart(2,"0");
+ return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;
+}
+function apos0300(){
+ const d=new Date();
+ return d.getHours()>=3;
+}
+function entregasPendentes(){
+ return registros.filter(r=>r.tipo==="Entrega" && status(r)==="Em uso");
+}
+function verificarAlerta(){
+ const pendentes=apos0300()?entregasPendentes():[];
+ const box=$("alertaPendencias");
+ if(!pendentes.length){
+  box.style.display="none"; box.innerHTML=""; return;
+ }
+ const nomes=[...new Set(pendentes.map(r=>r.colaborador))];
+ box.style.display="block";
+ box.innerHTML=`<strong>⚠ ALERTA — ativos não devolvidos após 03:00</strong>
+ ${nomes.length} colaborador(es) ainda não entregaram o ativo:
+ ${nomes.map(n=>`<span class="tag aberto">${esc(n)}</span>`).join(" ")}
+ <br><small>Ativos pendentes: ${pendentes.map(r=>esc(r.patrimonio)).join(", ")}</small>`;
+}
+function chaveMes(data){
+ return String(data||"").slice(0,7);
+}
+function atualizarRelatorio(){
+ const hoje=new Date(), mes=dataLocalISO(hoje).slice(0,7);
+ const ocorrencias={};
+ registros.forEach(r=>{
+  if(r.tipo!=="Entrega" || chaveMes(r.data)!==mes) return;
+  // Conta apenas se a entrega ficou aberta depois das 03:00 do dia seguinte.
+  const base=new Date(r.data+"T03:00:00");
+  base.setDate(base.getDate()+1);
+  const devolucao=registros
+   .filter(x=>x.tipo==="Devolução" &&
+      chavePatrimonio(x.patrimonio)===chavePatrimonio(r.patrimonio) &&
+      x.criadoEm>r.criadoEm)
+   .sort((a,b)=>a.criadoEm-b.criadoEm)[0];
+  const limite=new Date(r.data+"T03:00:00");
+  limite.setDate(limite.getDate()+1);
+  const houveApos0300=devolucao ? devolucao.criadoEm>=limite.getTime() : Date.now()>=limite.getTime();
+  if(houveApos0300){
+   ocorrencias[r.colaborador]=(ocorrencias[r.colaborador]||0)+1;
+  }
+ });
+ const ranking=Object.entries(ocorrencias).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],"pt-BR"));
+ $("resumoRelatorio").innerHTML=ranking.length
+  ? `<div class="card"><div class="muted">Ofensores no mês</div><div class="numero">${ranking.length}</div></div>`
+  : '<div class="vazio">Nenhuma ocorrência registrada no mês atual.</div>';
+ $("relatorioMensal").innerHTML=ranking.length
+  ? `<table class="tabela-relatorio"><thead><tr><th>Posição</th><th>Colaborador</th><th>Ocorrências</th></tr></thead><tbody>
+    ${ranking.map((x,i)=>`<tr><td>${i+1}º</td><td><strong>${esc(x[0])}</strong></td><td>${x[1]}</td></tr>`).join("")}
+    </tbody></table>`
+  : "";
+}
+function iniciarMonitoramento(){
+ verificarAlerta();
+ atualizarRelatorio();
+ setInterval(verificarAlerta,60000);
+ setInterval(atualizarRelatorio,60000);
+}
+
+function backup(){
+ const dados={aplicativo:"Controle de Coletores",versao:1,exportadoEm:new Date().toISOString(),registros};
+ const blob=new Blob([JSON.stringify(dados,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;a.download="backup-controle-coletores.json";a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function apagar(){
+ if(!registros.length){alert("Não há registros para apagar.");return;}
+ if(prompt("Esta ação apagará todos os registros. Digite APAGAR para confirmar:")!=="APAGAR")return;
+ const anterior=registros;
+ registros=[];
+ if(!persistir()){registros=anterior;renderizar();return;}
+ renderizar();mensagem("Histórico apagado deste navegador.");
+}
+const t=agora();$("data").value=t.data;$("hora").value=t.hora;
+carregarConfianca(); carregarColaboradores(); carregarObservacoesAtivos(); atualizarDatalist(); atualizarAtivos(); configurarBuscaAtivo(); carregar(); iniciarMonitoramento();
+</script>
+
+<script>
+function atualizarRelogioTopo(){
+  const el=document.getElementById('relogioTopo');
+  if(!el) return;
+  const agora=new Date();
+  el.textContent=agora.toLocaleDateString('pt-BR')+' '+agora.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+}
+atualizarRelogioTopo();
+setInterval(atualizarRelogioTopo,30000);
+</script>
+
+</body>
+</html>
